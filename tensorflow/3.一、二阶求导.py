@@ -34,7 +34,24 @@ with tf.GradientTape(persistent=True) as tt:
         print(dy_da.numpy())  # 6.0
 
     # 相当于二阶求导
+    # 二阶导数是一阶导数的导数
     dy2_da2 = t.gradient(dy_da, a)
     print(dy2_da2.numpy())
 
 del t
+
+
+# 二元梯度
+a3 = tf.constant(3.0)
+b3 = tf.constant(2.0)
+
+with tf.GradientTape(persistent=True) as t:
+    t.watch([a3, b3])
+    z = 2 * a3 * a3 * b3
+
+g1, g2 = t.gradient(z, [a3, b3])
+# 微分函数为：y=2x^2 * z
+print(g1, g2)
+
+
+
